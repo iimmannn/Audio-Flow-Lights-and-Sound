@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Flow Lights and Sound | Premium Event Production</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+            color: white;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        .glow-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-hover:hover {
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+            transform: translateY(-3px);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .gallery-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border-left: 3px solid #007BFF;
+        }
+        
+        .audio-visualizer {
+            height: 2px;
+            background: linear-gradient(90deg, #007BFF, #8A2BE2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .visualizer-bar {
+            position: absolute;
+            bottom: 0;
+            width: 3px;
+            background-color: white;
+            animation: visualizer 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes visualizer {
+            0%, 100% { height: 10%; }
+            50% { height: 100%; }
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-filter backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-white text-2xl font-bold tracking-tight">
+                        <span class="text-blue-500">Audio</span>
+                        <span class="text-violet-500">Flow Lights</span>
+                        <span class="text-white">& Sound</span>
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-white hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#services" class="text-white hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium">Services</a>
+                        <a href="#portfolio" class="text-white hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium">Portfolio</a>
+                        <a href="#testimonials" class="text-white hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium">Testimonials</a>
+                        <a href="#contact" class="text-white hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-blue-400 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95 pb-4">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#services" class="text-white block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <a href="#portfolio" class="text-white block px-3 py-2 rounded-md text-base font-medium">Portfolio</a>
+                <a href="#testimonials" class="text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+                <a href="#contact" class="text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-concert-audience-enjoying-music-435-large.mp4" type="video/mp4">
+        </video>
+        
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black via-transparent to-black opacity-60"></div>
+        
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
+                <span class="block">Unleashing Energy Through</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">Audio, Flow Lights & Sound</span>
+            </h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-300">
+                Transforming events into unforgettable experiences with cutting-edge audio, flow lighting, and sound production.
+            </p>
+            <a href="#contact" class="inline-block bg-blue-600 hover:bg-violet-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 glow-hover">
+                Book a Consultation
+            </a>
+        </div>
+        
+        <!-- Audio visualizer effect -->
+        <div class="audio-visualizer absolute bottom-0 left-0 w-full h-1">
+            <div class="visualizer-bar" style="left: 5%; animation-delay: 0s;"></div>
+            <div class="visualizer-bar" style="left: 10%; animation-delay: 0.2s;"></div>
+            <div class="visualizer-bar" style="left: 15%; animation-delay: 0.4s;"></div>
+            <div class="visualizer-bar" style="left: 20%; animation-delay: 0.6s;"></div>
+            <div class="visualizer-bar" style="left: 25%; animation-delay: 0.8s;"></div>
+            <div class="visualizer-bar" style="left: 30%; animation-delay: 1s;"></div>
+            <div class="visualizer-bar" style="left: 35%; animation-delay: 0.2s;"></div>
+            <div class="visualizer-bar" style="left: 40%; animation-delay: 0.4s;"></div>
+            <div class="visualizer-bar" style="left: 45%; animation-delay: 0.6s;"></div>
+            <div class="visualizer-bar" style="left: 50%; animation-delay: 0.8s;"></div>
+            <div class="visualizer-bar" style="left: 55%; animation-delay: 1s;"></div>
+            <div class="visualizer-bar" style="left: 60%; animation-delay: 0.2s;"></div>
+            <div class="visualizer-bar" style="left: 65%; animation-delay: 0.4s;"></div>
+            <div class="visualizer-bar" style="left: 70%; animation-delay: 0.6s;"></div>
+            <div class="visualizer-bar" style="left: 75%; animation-delay: 0.8s;"></div>
+            <div class="visualizer-bar" style="left: 80%; animation-delay: 1s;"></div>
+            <div class="visualizer-bar" style="left: 85%; animation-delay: 0.2s;"></div>
+            <div class="visualizer-bar" style="left: 90%; animation-delay: 0.4s;"></div>
+            <div class="visualizer-bar" style="left: 95%; animation-delay: 0.6s;"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+                    Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">Premium Services</span>
+                </h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    We deliver exceptional audio, lighting, and sound production services tailored to your event's needs.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-gray-900 rounded-xl p-8 transition-all duration-300 hover:border-b-4 hover:border-blue-500">
+                    <div class="text-blue-500 mb-6 text-5xl">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Audio Engineering</h3>
+                    <p class="text-gray-400 mb-6">
+                        Professional sound system design, installation, and operation for crystal clear audio at any venue size.
+                    </p>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i> Live sound reinforcement
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i> System tuning & optimization
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i> Wireless microphone systems
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-gray-900 rounded-xl p-8 transition-all duration-300 hover:border-b-4 hover:border-violet-500">
+                    <div class="text-violet-500 mb-6 text-5xl">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Lighting Design</h3>
+                    <p class="text-gray-400 mb-6">
+                        Creative lighting solutions that transform spaces and enhance the atmosphere of your event.
+                    </p>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-violet-500 mr-2"></i> Stage lighting design
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-violet-500 mr-2"></i> LED video walls & screens
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-violet-500 mr-2"></i> Intelligent moving lights
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-gray-900 rounded-xl p-8 transition-all duration-300 hover:border-b-4 hover:border-blue-500">
+                    <div class="text-blue-500 mb-6 text-5xl">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Live Event Production</h3>
+                    <p class="text-gray-400 mb-6">
+                        Complete event production services from concept to execution for seamless, memorable experiences.
+                    </p>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i> Full technical production
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i> Stage design & construction
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i> Event logistics management
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio/Gallery Section -->
+    <section id="portfolio" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+                    Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">Work</span>
+                </h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    Explore our portfolio of stunning events and productions we've brought to life.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Concert Lighting" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Summer Music Festival 2023</h3>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Corporate Event" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Tech Conference 2023</h3>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="DJ Performance" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Nightclub Installation</h3>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Wedding Event" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Luxury Wedding Production</h3>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://plus.unsplash.com/premium_photo-1664302637848-6ae0d5821944?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Theater Production" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Broadway Musical</h3>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1112&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Product Launch" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Product Launch Event</h3>
+                    </div>
+                </div>
+                    <div class="gallery-item rounded-xl overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1712260559328-abff8c9f0652?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Concert Lighting" 
+                         class="w-full h-64 object-cover transition-transform duration-500 cursor-pointer"
+                         onclick="openLightbox(this.src)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white text-lg font-bold">Sunday Worship</h3>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#contact" class="inline-block bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 glow-hover">
+                    View More Projects
+                </a>
+            </div>
+        </div>
+        
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img id="lightbox-img" class="lightbox-content" src="" alt="Enlarged view">
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+                    Client <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">Testimonials</span>
+                </h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    Hear what our clients say about our exceptional service and production quality.
+                </p>
+            </div>
+            
+            <div class="testimonial-slider relative">
+                <!-- Testimonial Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-6 italic">
+                            "Audio Light and Sound transformed our annual conference into a spectacular event. The audio was crystal clear throughout the venue, and the lighting design created an incredible atmosphere."
+                        </p>
+                        <div class="flex items-center">
+                            <div class="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg mr-4">
+                                JD
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">John Doe</h4>
+                                <p class="text-gray-400 text-sm">CEO, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-6 italic">
+                            "Working with Audio Light and Sound for our music festival was a game-changer. Their team handled everything from stage design to sound engineering with absolute professionalism."
+                        </p>
+                        <div class="flex items-center">
+                            <div class="bg-violet-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg mr-4">
+                                SJ
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">Sarah Johnson</h4>
+                                <p class="text-gray-400 text-sm">Event Director, SummerFest</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-6 italic">
+                            "The production quality for our product launch exceeded all expectations. The lighting effects perfectly highlighted our new products, and the sound system delivered impeccable audio."
+                        </p>
+                        <div class="flex items-center">
+                            <div class="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg mr-4">
+                                MS
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">Michael Smith</h4>
+                                <p class="text-gray-400 text-sm">Marketing Director, Innovate Inc.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                        Get In <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">Touch</span>
+                    </h2>
+                    <p class="text-lg text-gray-400 mb-8">
+                        Ready to elevate your event? Contact us today to discuss your audio, lighting, and sound production needs.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="text-blue-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Our Location</h4>
+                                <p class="text-gray-400">123 Production Ave, Event City, EC 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="text-violet-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Call Us</h4>
+                                <p class="text-gray-400">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="text-blue-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Email Us</h4>
+                                <p class="text-gray-400">info@audioflowlightsandsound.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4 pt-4">
+                            <a href="#" class="text-white hover:text-blue-500 text-2xl">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-blue-400 text-2xl">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-pink-500 text-2xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-blue-600 text-2xl">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-white">Send Us a Message</h3>
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-400 mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" required 
+                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-400 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-gray-400 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" 
+                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-400 mb-2">Your Message</label>
+                            <textarea id="message" name="message" rows="5" required 
+                                      class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"></textarea>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-white text-2xl font-bold mb-4">
+                        <span class="text-blue-500">Audio</span>
+                        <span class="text-violet-500">Flow Lights</span>
+                        <span class="text-white">& Sound</span>
+                    </h3>
+                    <p class="text-gray-400 mb-6">
+                        Transforming events into unforgettable experiences with cutting-edge audio, flow lighting, and sound production.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-500">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-pink-500">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-600">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-red-500">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-blue-400 transition-colors">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-blue-400 transition-colors">Services</a></li>
+                        <li><a href="#portfolio" class="text-gray-400 hover:text-blue-400 transition-colors">Portfolio</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-blue-400 transition-colors">Testimonials</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Audio Engineering</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Lighting Design</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Live Event Production</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Equipment Rental</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Technical Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2023 Audio Flow Lights and Sound. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-gray-400 text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-gray-400 text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-gray-400 text-sm">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible hover:bg-violet-600">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Lightbox functionality
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = src;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close lightbox when clicking outside the image
+        window.addEventListener('click', (event) => {
+            const lightbox = document.getElementById('lightbox');
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just log it and show an alert
+            console.log({ name, email, phone, message });
+            
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
